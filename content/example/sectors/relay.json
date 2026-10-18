@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "id": "example:relay",
+  "name": "RELAY STATION",
+  "steps": [
+    {
+      "type": "wave",
+      "ref": "example:relay_guard",
+      "complete_when": "enemies_cleared"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.8
+    },
+    {
+      "type": "wave",
+      "ref": "base:ambush",
+      "complete_when": "enemies_cleared"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.8
+    },
+    {
+      "type": "boss",
+      "ref": "example:relay_core",
+      "complete_when": "boss_defeated"
+    }
+  ]
+}

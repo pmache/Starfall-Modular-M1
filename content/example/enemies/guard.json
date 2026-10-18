@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "id": "example:guard",
+  "name": "RELAY GUARD",
+  "sprite": "bomber",
+  "hp": 52,
+  "score": 300,
+  "can_dive": false
+}

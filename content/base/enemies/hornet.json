@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "id": "base:hornet",
+  "name": "HORNET",
+  "sprite": "hornet",
+  "hp": 22,
+  "score": 100,
+  "can_dive": true
+}

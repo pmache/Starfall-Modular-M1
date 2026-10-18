@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "id": "base:last_line",
+  "name": "LAST LINE",
+  "dive_interval": 1.3,
+  "shot_speed": 101,
+  "fire_interval_min": 1.55,
+  "fire_interval_max": 3.75,
+  "spawns": [
+    {
+      "enemy": "base:hornet",
+      "x": 338,
+      "y": 46,
+      "carrier": false
+    },
+    {
+      "enemy": "base:bomber",
+      "x": 338,
+      "y": 95,
+      "carrier": false
+    },
+    {
+      "enemy": "base:manta",
+      "x": 338,
+      "y": 132,
+      "carrier": false
+    },
+    {
+      "enemy": "base:hornet",
+      "x": 338,
+      "y": 181,
+      "carrier": false
+    },
+    {
+      "enemy": "base:bomber",
+      "x": 338,
+      "y": 218,
+      "carrier": false
+    },
+    {
+      "enemy": "base:bomber",
+      "x": 381,
+      "y": 52,
+      "carrier": false
+    },
+    {
+      "enemy": "base:manta",
+      "x": 381,
+      "y": 89,
+      "carrier": false
+    },
+    {
+      "enemy": "base:hornet",
+      "x": 381,
+      "y": 138,
+      "carrier": true
+    },
+    {
+      "enemy": "base:bomber",
+      "x": 381,
+      "y": 175,
+      "carrier": false
+    },
+    {
+      "enemy": "base:manta",
+      "x": 381,
+      "y": 224,
+      "carrier": false
+    },
+    {
+      "enemy": "base:manta",
+      "x": 424,
+      "y": 46,
+      "carrier": false
+    },
+    {
+      "enemy": "base:hornet",
+      "x": 424,
+      "y": 95,
+      "carrier": false
+    },
+    {
+      "enemy": "base:bomber",
+      "x": 424,
+      "y": 132,
+      "carrier": false
+    },
+    {
+      "enemy": "base:manta",
+      "x": 424,
+      "y": 181,
+      "carrier": false
+    },
+    {
+      "enemy": "base:hornet",
+      "x": 424,
+      "y": 218,
+      "carrier": false
+    }
+  ]
+}

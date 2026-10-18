@@ -1,0 +1,10 @@
+/build/
+/dist/
+/out/
+/evidence/
+*.o
+*.obj
+*.exe
+*.dll
+*.log
+LATEST-PACKAGE.txt

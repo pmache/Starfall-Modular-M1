@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "id": "example:relay_core",
+  "name": "RELAY CORE",
+  "behavior": "null_crown",
+  "hp": 540,
+  "score": 5000,
+  "fire_interval": 0.8,
+  "rage_threshold": 0.5,
+  "rage_interval_multiplier": 0.72,
+  "shot_speed": 96,
+  "rage_shot_speed": 115,
+  "orbit_amplitude": 35,
+  "orbit_speed": 1.0
+}

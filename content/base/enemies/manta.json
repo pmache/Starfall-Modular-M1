@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "id": "base:manta",
+  "name": "MANTA",
+  "sprite": "manta",
+  "hp": 30,
+  "score": 160,
+  "can_dive": true
+}

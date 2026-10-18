@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "id": "base:bomber",
+  "name": "BOMBER",
+  "sprite": "bomber",
+  "hp": 42,
+  "score": 220,
+  "can_dive": true
+}

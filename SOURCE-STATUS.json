@@ -1,0 +1,22 @@
+{
+  "version": "modular-m1-source-candidate",
+  "date": "2026-09-24",
+  "input_archive_sha256": "fa6c267696bba67bb6964d04d4b3301514d4de5c5f91ea1c3074c8b57aed3507",
+  "status": {
+    "linux_core": "PASS",
+    "windows_build": "NOT_RUN",
+    "real_OpenGL_rendering": "NOT_RUN",
+    "PowerShell_creator": "NOT_RUN",
+    "human_acceptance": "NOT_RUN"
+  },
+  "checks": {
+    "original_simulation": 64,
+    "new_content_campaign": 112,
+    "black_box_integration": 91,
+    "total_checks": 267,
+    "ctest_suites_passed": 6,
+    "sanitized_ctest_suites_passed": 6
+  },
+  "contains_windows_executable": false,
+  "notes": "The JSON-only expansion proof uses the compiled Linux simulation executable. No old Windows executable or screenshots are presented as a new build."
+}

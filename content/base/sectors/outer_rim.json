@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "id": "base:outer_rim",
+  "name": "OUTER RIM",
+  "steps": [
+    {
+      "type": "wave",
+      "ref": "base:patrol",
+      "complete_when": "enemies_cleared"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.8
+    },
+    {
+      "type": "wave",
+      "ref": "base:ambush",
+      "complete_when": "enemies_cleared"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.8
+    },
+    {
+      "type": "wave",
+      "ref": "base:last_line",
+      "complete_when": "enemies_cleared"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.8
+    },
+    {
+      "type": "boss",
+      "ref": "base:null_crown",
+      "complete_when": "boss_defeated"
+    }
+  ]
+}

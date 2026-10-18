@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "id": "base:ambush",
+  "name": "AMBUSH",
+  "dive_interval": 1.65,
+  "shot_speed": 93,
+  "fire_interval_min": 1.7,
+  "fire_interval_max": 3.9,
+  "spawns": [
+    {
+      "enemy": "base:bomber",
+      "x": 336,
+      "y": 64.5,
+      "carrier": false
+    },
+    {
+      "enemy": "base:manta",
+      "x": 336,
+      "y": 110.5,
+      "carrier": false
+    },
+    {
+      "enemy": "base:manta",
+      "x": 336,
+      "y": 163.5,
+      "carrier": false
+    },
+    {
+      "enemy": "base:manta",
+      "x": 336,
+      "y": 223.5,
+      "carrier": false
+    },
+    {
+      "enemy": "base:manta",
+      "x": 379,
+      "y": 64.5,
+      "carrier": false
+    },
+    {
+      "enemy": "base:bomber",
+      "x": 379,
+      "y": 110.5,
+      "carrier": true
+    },
+    {
+      "enemy": "base:manta",
+      "x": 379,
+      "y": 163.5,
+      "carrier": false
+    },
+    {
+      "enemy": "base:manta",
+      "x": 379,
+      "y": 223.5,
+      "carrier": false
+    },
+    {
+      "enemy": "base:manta",
+      "x": 422,
+      "y": 64.5,
+      "carrier": false
+    },
+    {
+      "enemy": "base:manta",
+      "x": 422,
+      "y": 110.5,
+      "carrier": false
+    },
+    {
+      "enemy": "base:bomber",
+      "x": 422,
+      "y": 163.5,
+      "carrier": false
+    },
+    {
+      "enemy": "base:manta",
+      "x": 422,
+      "y": 223.5,
+      "carrier": false
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "id": "base:classic",
+  "name": "STARFALL CLASSIC",
+  "sectors": [
+    "base:outer_rim"
+  ],
+  "sector_transition_seconds": 2.4
+}

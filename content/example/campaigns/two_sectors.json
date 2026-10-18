@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "id": "example:two_sectors",
+  "name": "MODULAR DEMO",
+  "sectors": [
+    "base:outer_rim",
+    "example:relay"
+  ],
+  "sector_transition_seconds": 2.4
+}

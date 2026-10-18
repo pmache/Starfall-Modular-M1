@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "id": "example:relay_guard",
+  "name": "RELAY GUARD",
+  "dive_interval": 1.6,
+  "shot_speed": 94,
+  "fire_interval_min": 2.1,
+  "fire_interval_max": 3.6,
+  "spawns": [
+    {
+      "enemy": "example:guard",
+      "x": 400,
+      "y": 50,
+      "carrier": false
+    },
+    {
+      "enemy": "example:guard",
+      "x": 400,
+      "y": 88,
+      "carrier": false
+    },
+    {
+      "enemy": "example:guard",
+      "x": 400,
+      "y": 126,
+      "carrier": true
+    },
+    {
+      "enemy": "example:guard",
+      "x": 400,
+      "y": 164,
+      "carrier": false
+    },
+    {
+      "enemy": "example:guard",
+      "x": 400,
+      "y": 202,
+      "carrier": false
+    },
+    {
+      "enemy": "base:hornet",
+      "x": 340,
+      "y": 68,
+      "carrier": false
+    },
+    {
+      "enemy": "base:hornet",
+      "x": 340,
+      "y": 110,
+      "carrier": false
+    },
+    {
+      "enemy": "base:hornet",
+      "x": 340,
+      "y": 152,
+      "carrier": false
+    },
+    {
+      "enemy": "base:hornet",
+      "x": 340,
+      "y": 194,
+      "carrier": false
+    }
+  ]
+}

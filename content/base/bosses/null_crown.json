@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "id": "base:null_crown",
+  "name": "THE NULL CROWN",
+  "behavior": "null_crown",
+  "hp": 420,
+  "score": 5000,
+  "fire_interval": 0.72,
+  "rage_threshold": 0.5,
+  "rage_interval_multiplier": 0.72,
+  "shot_speed": 96,
+  "rage_shot_speed": 115,
+  "orbit_amplitude": 58,
+  "orbit_speed": 0.72
+}

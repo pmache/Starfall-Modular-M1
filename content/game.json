@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "default_campaign": "base:classic",
+  "packs": [
+    "base",
+    "example"
+  ]
+}
