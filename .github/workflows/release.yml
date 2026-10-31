@@ -36,9 +36,18 @@ jobs:
           update: false
           install: >-
             mingw-w64-x86_64-gcc
-            mingw-w64-x86_64-raylib
-            mingw-w64-x86_64-glfw
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-ninja
+            git
             zip
+      - name: Build raylib 5.5 (static)
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --branch 5.5 https://github.com/raysan5/raylib.git /tmp/raylib
+          cmake -S /tmp/raylib -B /tmp/raylib/build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+            -DBUILD_SHARED_LIBS=OFF -DBUILD_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX=/tmp/raylib-install
+          cmake --build /tmp/raylib/build
+          cmake --install /tmp/raylib/build
       - name: Build
         run: |
           set -euo pipefail
@@ -47,7 +56,7 @@ jobs:
           OUT=out/Starfall-Squadron
           COMMON="-std=c++17 -O2 -Wall -Wextra -Werror -D_GLIBCXX_ASSERTIONS -static-libgcc -static-libstdc++"
           CORE="src/content/json.cpp src/content/catalog.cpp src/gameplay/campaign.cpp src/gameplay/game.cpp src/gameplay/simulate.cpp src/runtime/options.cpp src/runtime/paths.cpp tests/regression.cpp"
-          g++ $COMMON -mwindows main.cpp src/runtime/renderer.cpp $CORE -o $OUT/starfall.exe -lraylib -lopengl32 -lgdi32 -lwinmm -lshell32 -luser32
+          g++ $COMMON -mwindows -I/tmp/raylib-install/include main.cpp src/runtime/renderer.cpp $CORE -o $OUT/starfall.exe -L/tmp/raylib-install/lib -lraylib -lopengl32 -lgdi32 -lwinmm -lshell32 -luser32
           g++ $COMMON src/content/tool_main.cpp $CORE -o $OUT/starfall-content.exe -lshell32 -luser32
           g++ $COMMON tests/test_main.cpp $CORE -o $OUT/starfall-tests.exe -lshell32 -luser32
       - name: Test (without OpenGL)
@@ -71,7 +80,8 @@ jobs:
           cp -r docs $OUT/
           cp README.md ACCEPTANCE.md PLAY-CLASSIC.cmd PLAY-DEMO.cmd TEST-SECTOR.cmd VALIDATE-CONTENT.cmd NEW-SECTOR.cmd new-sector.ps1 $OUT/
           mkdir -p $OUT/licenses
-          for n in raylib glfw libwinpthread gcc-libs; do
+          mkdir -p $OUT/licenses/raylib && cp /tmp/raylib/LICENSE $OUT/licenses/raylib/
+          for n in libwinpthread gcc-libs; do
             for d in "$P"/share/licenses/*"$n"*; do [ -d "$d" ] && cp -r "$d" $OUT/licenses/ || true; done
           done
           ls -la $OUT
@@ -105,6 +115,12 @@ jobs:
         run: |
           notes=".github/release-notes/${TAG}.md"
           [ -f "$notes" ] || { echo "Brak $notes"; exit 1; }
-          args=(--target "$GITHUB_SHA" --title "Starfall Modular M1 ${TAG}" --notes-file "$notes")
-          [ "$PRE" = "true" ] && args+=(--prerelease)
-          gh release create "$TAG" "${args[@]}" dist/*
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            # release już istnieje (np. wydanie samych źródeł) — dołącz binarki i zaktualizuj notatki
+            gh release edit "$TAG" --notes-file "$notes"
+            gh release upload "$TAG" dist/* --clobber
+          else
+            args=(--target "$GITHUB_SHA" --title "Starfall Modular M1 ${TAG}" --notes-file "$notes")
+            [ "$PRE" = "true" ] && args+=(--prerelease)
+            gh release create "$TAG" "${args[@]}" dist/*
+          fi
