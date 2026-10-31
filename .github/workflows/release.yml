@@ -11,6 +11,10 @@ on:
         description: "Oznacz jako pre-release"
         type: boolean
         default: true
+      publish:
+        description: "Opublikuj release (false = tylko zbuduj i wrzuć artefakt)"
+        type: boolean
+        default: true
   push:
     tags:
       - "v*"
@@ -19,10 +23,80 @@ permissions:
   contents: write
 
 jobs:
+  build-windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: false
+          install: >-
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-raylib
+            mingw-w64-x86_64-glfw
+            zip
+      - name: Build
+        run: |
+          set -euo pipefail
+          P=$(cygpath -u "$MINGW_PREFIX")
+          mkdir -p out/Starfall-Squadron
+          OUT=out/Starfall-Squadron
+          COMMON="-std=c++17 -O2 -Wall -Wextra -Werror -D_GLIBCXX_ASSERTIONS -static-libgcc -static-libstdc++"
+          CORE="src/content/json.cpp src/content/catalog.cpp src/gameplay/campaign.cpp src/gameplay/game.cpp src/gameplay/simulate.cpp src/runtime/options.cpp src/runtime/paths.cpp tests/regression.cpp"
+          g++ $COMMON -mwindows main.cpp src/runtime/renderer.cpp $CORE -o $OUT/starfall.exe -lraylib -lopengl32 -lgdi32 -lwinmm -lshell32 -luser32
+          g++ $COMMON src/content/tool_main.cpp $CORE -o $OUT/starfall-content.exe -lshell32 -luser32
+          g++ $COMMON tests/test_main.cpp $CORE -o $OUT/starfall-tests.exe -lshell32 -luser32
+      - name: Test (without OpenGL)
+        run: |
+          set -euo pipefail
+          cd out/Starfall-Squadron
+          cp -r ../../content .
+          ./starfall-tests.exe content
+          ./starfall-content.exe --self-test
+          ./starfall-content.exe --validate-content
+          ./starfall-content.exe --simulate-campaign --campaign example:two_sectors
+      - name: Package
+        run: |
+          set -euo pipefail
+          P=$(cygpath -u "$MINGW_PREFIX")
+          OUT=out/Starfall-Squadron
+          # dołącz niesystemowe DLL-e zależne od MinGW
+          for f in $OUT/starfall.exe; do
+            ldd "$f" | awk '/=> \/mingw64\//{print $3}' | while read -r d; do cp -n "$d" $OUT/; done
+          done
+          cp -r docs $OUT/
+          cp README.md ACCEPTANCE.md PLAY-CLASSIC.cmd PLAY-DEMO.cmd TEST-SECTOR.cmd VALIDATE-CONTENT.cmd NEW-SECTOR.cmd new-sector.ps1 $OUT/
+          mkdir -p $OUT/licenses
+          for n in raylib glfw libwinpthread gcc-libs; do
+            for d in "$P"/share/licenses/*"$n"*; do [ -d "$d" ] && cp -r "$d" $OUT/licenses/ || true; done
+          done
+          ls -la $OUT
+          VER="${TAG}"
+          (cd out && zip -r "Starfall-Squadron-${VER}-windows-x64.zip" Starfall-Squadron)
+          (cd out && sha256sum "Starfall-Squadron-${VER}-windows-x64.zip" > "Starfall-Squadron-${VER}-windows-x64.zip.sha256")
+        env:
+          TAG: ${{ github.event.inputs.tag || github.ref_name }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-x64
+          path: |
+            out/*.zip
+            out/*.sha256
+
   release:
+    needs: build-windows
+    if: github.event_name == 'push' || github.event.inputs.publish == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: windows-x64
+          path: dist
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -33,4 +107,4 @@ jobs:
           [ -f "$notes" ] || { echo "Brak $notes"; exit 1; }
           args=(--target "$GITHUB_SHA" --title "Starfall Modular M1 ${TAG}" --notes-file "$notes")
           [ "$PRE" = "true" ] && args+=(--prerelease)
-          gh release create "$TAG" "${args[@]}"
+          gh release create "$TAG" "${args[@]}" dist/*
